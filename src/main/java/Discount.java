@@ -3,15 +3,17 @@ import java.util.*;
  * Created by Administrator on 2016/7/12.
  */
 public class Discount {
-    ProductList list = new ProductList();
-    private String[] DiscountProduct = new String[3];
+    private static ProductList list = new ProductList();
+    private static String[] DiscountProduct = new String[3];
+    static
     {
         DiscountProduct[0] = "ITEM000001";
         DiscountProduct[1] = "ITEM000002";
         DiscountProduct[2] = "ITEM000003";
     }
 
-    private String[] PurchaseList = new String[3];
+    private static String[] PurchaseList = new String[3];
+    static
     {
         PurchaseList[0] = "ITEM000001";
         PurchaseList[1] = "ITEM000002-2";
@@ -20,10 +22,26 @@ public class Discount {
 
     public static void main(String[] args)
     {
+        double totalprice = 0;
+        double totaldiscountprice = 0;
+        for (String item : PurchaseList)
+        {
+            PurchaseItem iteminfo = ParseOneItem(item);
+            System.out.print("名称：" + iteminfo.getIteminfo().getName() +
+                            "，数量：" + iteminfo.getItemnum() + iteminfo.getIteminfo().getUnit() +
+                            "，单价：" + iteminfo.getIteminfo().getPrice() + "（元）" +
+                            "，小计：" + (iteminfo.getRealprice() - iteminfo.getDiscountprice()) + "（元）");
+            if (iteminfo.getDiscountprice() != 0)
+                System.out.print("，优惠：" + iteminfo.getDiscountprice() + "（元）");
+            System.out.println();
+            totalprice += iteminfo.getRealprice() - iteminfo.getDiscountprice();
+            totaldiscountprice += iteminfo.getDiscountprice();
+        }
 
+        System.out.println("总计：" + totalprice + "（元），优惠：" + totaldiscountprice + "（元）");
     }
 
-    public PurchaseItem ParseOneItem(String itemtoparse)
+    public static PurchaseItem ParseOneItem(String itemtoparse)
     {
         PurchaseItem item = new PurchaseItem();
         int pos = itemtoparse.indexOf('-');
