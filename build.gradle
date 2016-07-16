@@ -9,6 +9,13 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    unitTest {
+        java.srcDirs = ['src/test/java']
+    }
+}
+
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
