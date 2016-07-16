@@ -1,4 +1,6 @@
 language: java
 sudo: true
+before_script:
+  - sudo ./gradlew assemble
 script:
-  - ./gradlew check
+  - sudo ./gradlew check
